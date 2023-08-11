@@ -53,6 +53,7 @@ export default function Profile({ navigation }: any) {
   return (
     <View className="flex-1" style={{ backgroundColor: primaryColor }}>
       <ModalConfirm
+        handler={submitLogout}
         text="Apakah Anda yakin untuk Logout ?"
         icon={<Ionicons name="warning-outline" size={100} color="black" />}
         active={active}
@@ -70,7 +71,7 @@ export default function Profile({ navigation }: any) {
       >
         <ButtonPress
           fontBold={false}
-          handler={() => console.log("Ubah Username")}
+          handler={() => navigation.navigate("EditName")}
           width="100%"
           label="Ubah Username"
           textColor={"white"}
@@ -78,7 +79,7 @@ export default function Profile({ navigation }: any) {
         />
         <ButtonPress
           fontBold={false}
-          handler={() => console.log("Ubah Password")}
+          handler={() => navigation.navigate("EditPass")}
           width="100%"
           label="Ubah Password"
           textColor={"white"}

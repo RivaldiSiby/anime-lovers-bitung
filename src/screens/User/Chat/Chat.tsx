@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import TabBarMenu from "../../../components/layouts/TabBarMenu";
 import { fontOswaldM } from "../../../helpers/fonts";
 import ChatRoom from "../../../components/layouts/ChatRoom";
+import AddBox from "../../../components/layouts/AddBox";
 
-export default function Chat() {
+export default function Chat({ navigation }: any) {
   return (
     <View className="flex-1">
       <Text className="w-full text-center my-5" style={fontOswaldM}>
@@ -16,6 +17,8 @@ export default function Chat() {
         <ChatRoom />
         <ChatRoom />
         <ChatRoom />
+
+        <AddBox handler={() => navigation.navigate("AddRoom")} />
       </View>
       <TabBarMenu active="chat" />
     </View>
