@@ -47,9 +47,15 @@ export default function StarterUser({ navigation }: any) {
   const submitHandler = async () => {
     try {
       setLoading(true);
-
-      if (img === "") return setErrMsg("Anda belum memasukan foto profile !");
-      if (username === "") return setErrMsg("Anda belum memasukan username !");
+      setErrMsg("");
+      if (img === "") {
+        setLoading(false);
+        return setErrMsg("Anda belum memasukan foto profile !");
+      }
+      if (username === "") {
+        setLoading(false);
+        return setErrMsg("Anda belum memasukan username !");
+      }
       // prepare img
       const blobImg = await uriToBlob(img);
       const payloadImg = {

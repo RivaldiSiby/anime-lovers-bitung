@@ -60,9 +60,9 @@ export default function Home({ navigation }: any) {
           <View className="pt-2">
             <TtitleText label="New Post" />
             <View className="px-3 w-full">
+              {/* <PostList />
               <PostList />
-              <PostList />
-              <PostList />
+              <PostList /> */}
             </View>
           </View>
         </ScrollView>
