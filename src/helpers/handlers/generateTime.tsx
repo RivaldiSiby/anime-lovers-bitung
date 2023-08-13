@@ -25,6 +25,9 @@ export function formatDuration(time: any) {
       timeUnits.push(`${remainingMinutes} menit lalu`);
     }
   }
+  if (remainingMinutes < 1) {
+    timeUnits.push(`Baru Saja`);
+  }
 
   return timeUnits.join(", ");
 }

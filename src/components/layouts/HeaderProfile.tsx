@@ -6,8 +6,11 @@ import { fontRobotoB, fontRobotoM } from "../../helpers/fonts";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
+import { getAuth } from "firebase/auth";
+import { app } from "../../config/firebase/config";
 
 export default function HeaderProfile(payload: { img: any }) {
+  const user = getAuth(app).currentUser;
   const navigation: any = useNavigation();
   const { img } = payload;
   return (
@@ -26,10 +29,10 @@ export default function HeaderProfile(payload: { img: any }) {
         <Image className="w-full h-full rounded-full" source={{ uri: img }} />
       </View>
       <Text className="text-white text-[30px]" style={fontRobotoB}>
-        Hi, User
+        Hi, {user?.displayName}
       </Text>
       <Text className="text-white text-[12px]" style={fontRobotoM}>
-        rivaldisiby@gmail.com
+        {user?.email}
       </Text>
       <Image
         className="absolute right-0 top-0"

@@ -3,7 +3,13 @@ import React, { useState } from "react";
 import { fontRobotoM } from "../../helpers/fonts";
 import { primaryColor, secondaryColor } from "../../helpers/colors";
 
-export default function InputRadio() {
+export default function InputRadio({
+  val,
+  setVal,
+}: {
+  val: string;
+  setVal: any;
+}) {
   const [height, setHeight] = useState(30);
   return (
     <View className="w-full ">
@@ -11,6 +17,8 @@ export default function InputRadio() {
         className="  rounded-full px-3 text-[12px] py-2"
         multiline
         placeholder="Buat Pesan ..."
+        value={val}
+        onChangeText={(text) => setVal(text)}
         style={{
           ...fontRobotoM,
           color: primaryColor,

@@ -4,8 +4,11 @@ import { darkTransparantColor, primaryColor } from "../../helpers/colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { fontRobotoB, fontRobotoM } from "../../helpers/fonts";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { getAuth } from "firebase/auth";
+import { app } from "../../config/firebase/config";
 
 export default function HeaderUser(payload: { handler: any; img: any }) {
+  const user = getAuth(app).currentUser;
   const { handler, img } = payload;
   return (
     <View
@@ -39,10 +42,10 @@ export default function HeaderUser(payload: { handler: any; img: any }) {
         )}
       </TouchableOpacity>
       <Text className="text-white text-[30px]" style={fontRobotoB}>
-        Hi, User
+        Hi, {user?.displayName}
       </Text>
       <Text className="text-white text-[12px]" style={fontRobotoM}>
-        rivaldisiby@gmail.com
+        {user?.email}
       </Text>
       <Image
         className="absolute right-0 top-0"

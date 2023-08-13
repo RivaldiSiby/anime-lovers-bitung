@@ -9,25 +9,44 @@ import HeaderProfile from "../../../../../components/layouts/HeaderProfile";
 import ButtonPress from "../../../../../components/layouts/ButtonPress";
 import InputForm from "../../../../../components/forms/InputForm";
 import { FontAwesome } from "@expo/vector-icons";
+import TextAuth from "../../../../../components/layouts/TextAuth";
+import { updateProfileUser } from "../../../../../service/fireauth/fireauth";
+import Loading from "../../../../../components/layouts/Loading";
+import ErrMsg from "../../../../../components/layouts/ErrMsg";
 
-export default function EditName() {
+export default function EditName({ navigation }: any) {
   const user: any = getAuth(app).currentUser;
   const [img, setImg] = useState<any>(user?.photoURL);
   const [username, setUsername] = useState("");
 
+  const [errMsg, setErrMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
   // modal
-  const [active, setActive] = useState(false);
+
+  const submitHandler = async () => {
+    try {
+      setLoading(true);
+      if (username === "") {
+        setLoading(false);
+        return setErrMsg("username tidak boleh kosong !");
+      }
+      const payloadUser = {
+        displayName: username,
+      };
+      await updateProfileUser(payloadUser);
+      setLoading(false);
+      return navigation.replace("Profile");
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
   return (
     <View className="flex-1" style={{ backgroundColor: primaryColor }}>
-      <ModalConfirm
-        handler={() => console.log("test")}
-        text="Apakah Anda yakin untuk Logout ?"
-        icon={<Ionicons name="warning-outline" size={100} color="black" />}
-        active={active}
-        setActive={setActive}
-      />
-      <HeaderProfile img={img} />
+      {!loading ? "" : <Loading />}
 
+      <HeaderProfile img={img} />
       <View
         className="flex-1 px-5"
         style={{
@@ -36,6 +55,7 @@ export default function EditName() {
           backgroundColor: lightColor,
         }}
       >
+        <TextAuth text="Update username " />
         <InputForm
           secure={false}
           setVal={setUsername}
@@ -44,9 +64,12 @@ export default function EditName() {
           placeholder={"Username ..."}
           icon={<FontAwesome name="user" size={22} color={primaryColor} />}
         />
+        <View className="w-full items-center">
+          <ErrMsg msg={errMsg} />
+        </View>
         <ButtonPress
           fontBold={false}
-          handler={() => console.log("Ubah Username")}
+          handler={() => submitHandler()}
           width="100%"
           label="Submit"
           textColor={"white"}

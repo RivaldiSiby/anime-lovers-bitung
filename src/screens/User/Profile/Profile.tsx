@@ -1,5 +1,5 @@
 import { View, Text, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TabBarMenu from "../../../components/layouts/TabBarMenu";
 import { fontOswaldM } from "../../../helpers/fonts";
 import { getAuth } from "firebase/auth";
@@ -20,6 +20,10 @@ import { Ionicons } from "@expo/vector-icons";
 export default function Profile({ navigation }: any) {
   const user: any = getAuth(app).currentUser;
   const [img, setImg] = useState<any>(user?.photoURL);
+
+  useEffect(() => {
+    if (user === null) return navigation.replace("Splash");
+  }, []);
 
   // modal
   const [active, setActive] = useState(false);

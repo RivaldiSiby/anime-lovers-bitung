@@ -13,7 +13,7 @@ export default function PostList(data: any) {
       <View className="flex-row">
         <Image
           className="w-[40px] h-[40px] rounded-full"
-          source={require("../../assets/img/dumy/profile.jpeg")}
+          source={{ uri: data?.data?.created_by?.img }}
         />
         <View className="flex-1 pl-3">
           <Text style={{ ...fontRobotoB, color: primaryColor }}>

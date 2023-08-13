@@ -9,25 +9,46 @@ import HeaderProfile from "../../../../../components/layouts/HeaderProfile";
 import ButtonPress from "../../../../../components/layouts/ButtonPress";
 import InputForm from "../../../../../components/forms/InputForm";
 import { FontAwesome } from "@expo/vector-icons";
+import { updatePass } from "../../../../../service/fireauth/fireauth";
+import ErrMsg from "../../../../../components/layouts/ErrMsg";
+import Loading from "../../../../../components/layouts/Loading";
 
-export default function EditPass() {
+export default function EditPass({ navigation }: any) {
   const user: any = getAuth(app).currentUser;
   const [img, setImg] = useState<any>(user?.photoURL);
   const [password, setPassword] = useState("");
   const [kPassword, setkPassword] = useState("");
 
   // modal
-  const [active, setActive] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+
+  const submitHandler = async () => {
+    try {
+      setLoading(true);
+      if (kPassword === "" || password === "") {
+        setLoading(false);
+        return setErrMsg("inputan tidak boleh kosong !");
+      }
+      if (password !== kPassword) {
+        setLoading(false);
+        return setErrMsg("konfirmasi password tidak cocok !");
+      }
+      console.log(password);
+      console.log(kPassword);
+      await updatePass(password);
+      setLoading(false);
+      return navigation.replace("Profile");
+    } catch (error: any) {
+      setLoading(false);
+      setErrMsg(error.message);
+      console.log(error);
+    }
+  };
 
   return (
     <View className="flex-1" style={{ backgroundColor: primaryColor }}>
-      <ModalConfirm
-        handler={() => console.log("test")}
-        text="Apakah Anda yakin untuk Logout ?"
-        icon={<Ionicons name="warning-outline" size={100} color="black" />}
-        active={active}
-        setActive={setActive}
-      />
+      {!loading ? "" : <Loading />}
       <HeaderProfile img={img} />
 
       <View
@@ -54,9 +75,12 @@ export default function EditPass() {
           placeholder={"Konfirmasi Password baru"}
           icon={<FontAwesome name="user" size={22} color={primaryColor} />}
         />
+        <View className="w-full items-center">
+          <ErrMsg msg={errMsg} />
+        </View>
         <ButtonPress
           fontBold={false}
-          handler={() => console.log("Ubah Username")}
+          handler={() => submitHandler()}
           width="100%"
           label="Submit"
           textColor={"white"}

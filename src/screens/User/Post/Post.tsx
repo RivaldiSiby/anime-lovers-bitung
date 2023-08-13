@@ -20,6 +20,9 @@ export default function Post({ navigation }: any) {
   const userdata = useSelector((state: any) => state.user.data);
   const [data, setData] = useState([]);
 
+  useEffect(() => {
+    if (user === null) return navigation.replace("Splash");
+  }, []);
   // modal
   const [active, setActive] = useState(false);
   const [selected, setSelected] = useState<any>("");
@@ -37,8 +40,6 @@ export default function Post({ navigation }: any) {
       snapshot();
     };
   }, []);
-
-  console.log(userdata);
 
   const handlerDelete = async () => {
     try {
@@ -72,7 +73,7 @@ export default function Post({ navigation }: any) {
         <ScrollView showsVerticalScrollIndicator={false}>
           {data.map((v: any) => (
             // with delete
-            <>
+            <View key={v.id}>
               {userdata.role === "admin" && user.uid === v?.created_by?.id ? (
                 <View
                   className="w-full border items-end rounded-lg pt-3 mb-5"
@@ -92,10 +93,15 @@ export default function Post({ navigation }: any) {
               ) : (
                 <PostList key={v.id} data={v} />
               )}
-            </>
+            </View>
           ))}
         </ScrollView>
-        <AddBox handler={() => navigation.navigate("AddPost")} />
+
+        {userdata.role === "admin" ? (
+          <AddBox handler={() => navigation.navigate("AddPost")} />
+        ) : (
+          ""
+        )}
       </View>
       <TabBarMenu active="post" />
     </View>

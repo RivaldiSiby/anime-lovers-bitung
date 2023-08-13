@@ -1,23 +1,28 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { darkLowTransparantColor } from "../../../../helpers/colors";
 import { fontRobotoM } from "../../../../helpers/fonts";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Banner() {
+export default function Banner({ data }: { data: any }) {
+  const navigation: any = useNavigation();
   return (
-    <View className="w-full h-[200px] border rounded-[20px]  rounded-b-[0px] shadow">
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Event")}
+      className="w-full h-[200px] border rounded-[20px]  rounded-b-[0px] shadow"
+    >
       <Image
         className="w-full h-full rounded-[20px] rounded-b-[0px]"
-        source={require("../../../../assets/img/dumy/banner.jpeg")}
+        source={{ uri: data.img }}
       />
       <View
         className="w-full py-3 px-2 absolute z-10 bottom-0"
         style={{ backgroundColor: darkLowTransparantColor }}
       >
         <Text className="text-white" style={fontRobotoM}>
-          EVENT : Nobar Luffy Gear 5 Bitung
+          {data.title}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

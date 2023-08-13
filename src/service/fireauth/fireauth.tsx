@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   signOut,
   updateProfile,
+  updatePassword,
 } from "firebase/auth";
 import { app } from "../../config/firebase/config";
 
@@ -80,6 +81,16 @@ export const signUpUserWithGoogle = async () => {
 export const updateProfileUser = async (payload: any) => {
   try {
     await updateProfile(auth.currentUser, payload);
+    return;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+export const updatePass = async (payload: any) => {
+  try {
+    await updatePassword(auth.currentUser, payload);
+    return;
   } catch (error) {
     console.log(error);
     throw error;

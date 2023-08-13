@@ -30,8 +30,6 @@ export default function AddPost({ navigation }: any) {
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
-  console.log(payload);
-
   const submitHandler = async () => {
     try {
       setLoading(true);
@@ -56,6 +54,7 @@ export default function AddPost({ navigation }: any) {
         created_by: {
           id: user.uid,
           name: user.displayName,
+          img: user.photoURL,
         },
         isi: payload.isi,
         img: urlImg,
