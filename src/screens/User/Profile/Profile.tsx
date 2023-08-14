@@ -16,6 +16,7 @@ import ButtonPress from "../../../components/layouts/ButtonPress";
 import { logoutUserHandler } from "../../../service/fireauth/fireauth";
 import ModalConfirm from "../../../components/modal/ModalConfirm";
 import { Ionicons } from "@expo/vector-icons";
+import HeaderProfile from "../../../components/layouts/HeaderProfile";
 
 export default function Profile({ navigation }: any) {
   const user: any = getAuth(app).currentUser;
@@ -63,7 +64,7 @@ export default function Profile({ navigation }: any) {
         active={active}
         setActive={setActive}
       />
-      <HeaderUser img={img} handler={pickImg} />
+      <HeaderProfile img={img} />
 
       <View
         className="flex-1 px-5"
@@ -73,14 +74,14 @@ export default function Profile({ navigation }: any) {
           backgroundColor: lightColor,
         }}
       >
-        <ButtonPress
+        {/* <ButtonPress
           fontBold={false}
           handler={() => navigation.navigate("EditName")}
           width="100%"
           label="Ubah Username"
           textColor={"white"}
           bgcolor={primaryColor}
-        />
+        /> */}
         <ButtonPress
           fontBold={false}
           handler={() => navigation.navigate("EditPass")}

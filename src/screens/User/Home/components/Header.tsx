@@ -3,9 +3,12 @@ import React from "react";
 import { primaryColor } from "../../../../helpers/colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { fontRobotoB, fontRobotoM } from "../../../../helpers/fonts";
+import { getAuth } from "firebase/auth";
+import { app } from "../../../../config/firebase/config";
 
 export default function HeaderHome(payload: { img: any }) {
   const { img } = payload;
+  const user = getAuth(app).currentUser;
   return (
     <View
       className="w-full h-[20%] justify-start items-center  flex-row px-5"
@@ -22,12 +25,12 @@ export default function HeaderHome(payload: { img: any }) {
           }}
         />
       </View>
-      <View className="flex-1">
+      <View className="flex-1 z-20 ">
         <Text className="text-white text-[30px]" style={fontRobotoB}>
-          Hi, User
+          Hi, {user?.displayName}
         </Text>
         <Text className="text-white text-[12px]" style={fontRobotoM}>
-          rivaldisiby@gmail.com
+          {user?.email}
         </Text>
       </View>
       <Image

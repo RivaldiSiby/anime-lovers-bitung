@@ -32,6 +32,13 @@ export default function Splash({ navigation }: any) {
         <Text style={fontRobotoB} className="text-white">
           Tunggu Sebentar Ya ...{" "}
         </Text>
+
+        <Text
+          className="absolute text-white bottom-5 text-[12px]"
+          style={fontRobotoB}
+        >
+          Created by Tuama Digital
+        </Text>
       </View>
     </View>
   );

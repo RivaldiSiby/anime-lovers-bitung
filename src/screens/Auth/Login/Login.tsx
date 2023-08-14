@@ -91,7 +91,9 @@ export default function Login({ navigation }: any) {
           placeholder={"Password"}
           icon={<MaterialIcons name="vpn-key" size={22} color={primaryColor} />}
         />
-        <ErrMsg msg={errMsg} />
+        <View className="w-full items-center">
+          <ErrMsg msg={errMsg} />
+        </View>
         <View className="w-full ">
           <ButtonPress
             fontBold={false}

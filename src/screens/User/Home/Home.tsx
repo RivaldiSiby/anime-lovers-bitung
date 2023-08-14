@@ -21,7 +21,7 @@ export default function Home({ navigation }: any) {
   const user = getAuth(app).currentUser;
   const userInfo = useSelector((state: any) => state.user.data);
 
-  const [event, setEvent] = useState([]);
+  const [event, setEvent] = useState(false);
   const [post, setPost] = useState([]);
   const [chat, setChat] = useState([]);
 
@@ -37,7 +37,7 @@ export default function Home({ navigation }: any) {
       res.docs.forEach((doc) => {
         wrapdata.push({ ...doc.data(), id: doc.id });
       });
-      setEvent(wrapdata[0]);
+      setEvent(wrapdata.length > 0 ? wrapdata[0] : false);
     });
     return () => {
       snapshot();
@@ -71,7 +71,7 @@ export default function Home({ navigation }: any) {
       snapshot();
     };
   }, []);
-  console.log(post);
+  console.log("check data");
 
   return (
     <View className="flex-1 " style={{ backgroundColor: primaryColor }}>
@@ -84,23 +84,33 @@ export default function Home({ navigation }: any) {
       >
         <ScrollView showsVerticalScrollIndicator={false} className="pb-5 ">
           {/* banner */}
-          <View className="w-full px-3 py-3">
-            <Banner data={event} />
-          </View>
+          {event ? (
+            <View className="w-full px-3 py-3">
+              <Banner data={event} />
+            </View>
+          ) : (
+            ""
+          )}
           {/* chat room */}
           <View className="w-full ">
             <TtitleText label="Chat Room" />
-            <ScrollView
-              horizontal={true}
-              className="pt-2 w-full  "
-              showsHorizontalScrollIndicator={false}
-            >
-              <View className="flex-row w-full px-3">
-                {chat.map((v: any) => (
-                  <ChatRoom data={v} key={v.id} />
-                ))}
-              </View>
-            </ScrollView>
+            {chat.length > 0 ? (
+              <ScrollView
+                horizontal={true}
+                className="pt-2 w-full  "
+                showsHorizontalScrollIndicator={false}
+              >
+                <View className="flex-row w-full px-3">
+                  {chat.map((v: any) => (
+                    <ChatRoom data={v} key={v.id} />
+                  ))}
+                </View>
+              </ScrollView>
+            ) : (
+              <Text className="text-black">
+                Belum ada postingan yang dibuat
+              </Text>
+            )}
           </View>
           {/* post */}
 

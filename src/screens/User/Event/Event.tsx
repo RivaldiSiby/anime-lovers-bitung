@@ -32,7 +32,7 @@ export default function Event({ navigation }: any) {
       res.docs.forEach((doc) => {
         wrapdata.push({ ...doc.data(), id: doc.id });
       });
-      setData(wrapdata[0]);
+      setData(wrapdata.length > 0 ? wrapdata[0] : false);
     });
     return () => {
       snapshot();
